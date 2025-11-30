@@ -31,7 +31,7 @@ class ProviderClient:
 
 class GroqClient(ProviderClient):
     def __init__(self, api_key: str):
-        super().__init__('groq', api_key, 'https://api.groq.com/openai/v1', 'llama3-8b-8192')
+        super().__init__('groq', api_key, 'https://api.groq.com/openai/v1', 'llama-3.3-70b-versatile')
     
     async def chat(self, message: str) -> str:
         import groq
@@ -47,34 +47,32 @@ class GroqClient(ProviderClient):
 
 class OpenRouterClient(ProviderClient):
     def __init__(self, api_key: str):
-        super().__init__('openrouter', api_key, 'https://openrouter.ai/api/v1', 'meta-llama/llama-3.1-8b-instruct:free')
+        super().__init__('openrouter', api_key, 'https://openrouter.ai/api/v1', 'tngtech/deepseek-r1t2-chimera:free')
     
     async def chat(self, message: str) -> str:
+        from openai import OpenAI
+        client = OpenAI(
+            base_url=self.base_url,
+            api_key=self.api_key,
+        )
         self.call_history.append(time.time())
-        async with httpx.AsyncClient() as client:
-            resp = await client.post(
-                f"{self.base_url}/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {self.api_key}",
-                    "Content-Type": "application/json",
-                    "HTTP-Referer": "https://codiverse-dev.vercel.app",
-                    "X-Title": "CodiverseBot"
-                },
-                json={
-                    "model": self.model,
-                    "messages": [{"role": "user", "content": message}],
-                    "max_tokens": 1000
-                }
-            )
-            resp.raise_for_status()
-            return resp.json()['choices'][0]['message']['content']
+        response = await asyncio.to_thread(
+            client.chat.completions.create,
+            model=self.model,
+            messages=[{"role": "user", "content": message}],
+            extra_headers={
+                "HTTP-Referer": "https://codiverse-dev.vercel.app",
+                "X-Title": "CodiverseBot",
+            }
+        )
+        return response.choices[0].message.content
 
 class GeminiClient(ProviderClient):
     def __init__(self, api_key: str):
         import google.generativeai as genai
         genai.configure(api_key=api_key)
-        super().__init__('gemini', api_key, '', 'gemini-1.5-flash')
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        super().__init__('gemini', api_key, '', 'gemini-2.0-flash-exp')
+        self.model = genai.GenerativeModel('gemini-2.0-flash-exp')
     
     async def chat(self, message: str) -> str:
         self.call_history.append(time.time())
