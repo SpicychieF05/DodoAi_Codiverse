@@ -3,3 +3,7 @@ gspread
 google-auth
 python-dotenv
 openai
+groq
+google-generativeai
+httpx
+aiosqlite
