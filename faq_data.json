@@ -1,0 +1,40 @@
+{
+  "general": [
+    {
+      "q": "What makes Codiverse different?",
+      "a": "We operate on a Zero-Compromise 'Sharp Tech' philosophy. We engineer authoritative AI agents and precision-built digital systems rather than templates."
+    },
+    {
+      "q": "Do you only make dark high-tech designs?",
+      "a": "No. We design for your brand identity. Sharp-Tech is our signature, but we work with any palette if it maintains clarity and structure."
+    }
+  ],
+  "ai_automation": [
+    {
+      "q": "What is Official Chatbot Training?",
+      "a": "We convert generalist AI into authoritative brand experts using RAG-based training on your institutional data, ensuring zero hallucinations."
+    },
+    {
+      "q": "Can your AI handle complex tasks?",
+      "a": "Yes. It can integrate with your systems to handle bookings, inventory lookups, and automated workflows."
+    }
+  ],
+  "design": [
+    {
+      "q": "Your designs are sharp and futuristic. What if my brand is traditional?",
+      "a": "Our design philosophy adapts to any brand identity, while maintaining premium structure and clarity."
+    }
+  ],
+  "management": [
+    {
+      "q": "Can you finish a project in 2 weeks?",
+      "a": "We can deliver an MVP-first rapid launch while avoiding quality trade-offs or technical debt."
+    }
+  ],
+  "post_launch": [
+    {
+      "q": "What if something breaks after launch?",
+      "a": "We offer ongoing support under our 'Pour the Wine' program—continuous monitoring, stability patches, and AI retraining."
+    }
+  ]
+}
