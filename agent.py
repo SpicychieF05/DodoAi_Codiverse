@@ -27,15 +27,18 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Constants
-TOKEN: Final = os.getenv("TELEGRAM_BOT_TOKEN")
+TOKEN: Final[str] = os.getenv("TELEGRAM_BOT_TOKEN") or ""
 BOT_USERNAME: Final = "@CodiverseBot"
+
+if not TOKEN:
+    raise ValueError("TELEGRAM_BOT_TOKEN not found in environment variables")
 
 # Initialize Multi-API Client
 api_client = MultiAPIClient()
 
 # Conversation States
 NAME, SERVICE, DETAILS = range(3)
-CHECK_CMID = range(1)
+CHECK_CMID = 0
 
 # Initialize Sheets Manager
 sheets_manager = GoogleSheetsManager()
@@ -60,9 +63,14 @@ except FileNotFoundError:
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Starts the bot and shows the main menu."""
+    if not update.message:
+        return
+    
     user = update.effective_user
+    user_name = user.first_name if user else "there"
+    
     welcome_msg = (
-        f"Hello {user.first_name}! 👋🏻\n"
+        f"Hello {user_name}! 👋🏻\n"
         f"I am DodoAi - Codiverse Support Specialist.\n\n"
         f"I can help you start a new project or check the status of an existing one.\n\n"
         f"What would you like to do?"
@@ -77,6 +85,9 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Displays help information."""
+    if not update.message:
+        return
+    
     help_text = (
         "Here's how I can help:\n\n"
         "🚀 **Start New Project**: I'll collect your requirements and assign you a Member ID (CMID).\n"
@@ -88,6 +99,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Admin stats command"""
+    if not update.message:
+        return
+    
     try:
         async with aiosqlite.connect('api_stats.db') as db:
             async with db.execute("SELECT provider, COUNT(*) as calls, AVG(response_time) as avg_time, SUM(success) as successes FROM usage GROUP BY provider") as cursor:
@@ -102,6 +116,9 @@ async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Cancels and ends the conversation."""
+    if not update.message:
+        return ConversationHandler.END
+    
     await update.message.reply_text(
         "Operation cancelled. How else can I help you?",
         reply_markup=ReplyKeyboardRemove(),
@@ -112,6 +129,9 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def start_project(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Starts the new project flow."""
+    if not update.message:
+        return ConversationHandler.END
+    
     await update.message.reply_text(
         "Great! Let's get your project started. 🚀\n\n"
         "First, could you please tell me your **Full Name**?",
@@ -121,6 +141,9 @@ async def start_project(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 
 async def get_name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Collects name and asks for service type."""
+    if not update.message or not update.message.text or not context.user_data:
+        return ConversationHandler.END
+    
     context.user_data["name"] = update.message.text
     
     reply_keyboard = [["📱 Mobile App", "💻 Website"], ["🤖 AI/Automation", "🎨 Design/Branding"]]
@@ -134,6 +157,9 @@ async def get_name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def get_service(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Collects service type and asks for details."""
+    if not update.message or not update.message.text or not context.user_data:
+        return ConversationHandler.END
+    
     context.user_data["service"] = update.message.text
     
     await update.message.reply_text(
@@ -145,9 +171,16 @@ async def get_service(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
 async def get_details(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Collects details, saves to Sheet, and generates CMID."""
+    if not update.message or not update.message.text or not context.user_data:
+        return ConversationHandler.END
+    
     details = update.message.text
-    name = context.user_data["name"]
-    service = context.user_data["service"]
+    name = context.user_data.get("name")
+    service = context.user_data.get("service")
+    
+    if not name or not service:
+        await update.message.reply_text("Error: Missing information. Please start over with /start")
+        return ConversationHandler.END
     
     await update.message.reply_text("Thank you! Processing your request... ⏳")
     
@@ -177,6 +210,9 @@ async def get_details(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
 async def check_status_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Starts the status check flow."""
+    if not update.message:
+        return ConversationHandler.END
+    
     await update.message.reply_text(
         "Sure, I can check that for you. 🔍\n\n"
         "Please enter your **Codiverse Member ID (CMID)**:",
@@ -186,6 +222,9 @@ async def check_status_start(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
 async def get_cmid_status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Looks up the CMID and returns status."""
+    if not update.message or not update.message.text:
+        return ConversationHandler.END
+    
     cmid = update.message.text.strip()
     
     await update.message.reply_text("Searching records... ⏳")
@@ -216,6 +255,9 @@ async def get_cmid_status(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handles general messages using Multi-API Client with Failover."""
+    if not update.message or not update.message.text or not update.effective_chat:
+        return
+    
     text = update.message.text
     session_id = str(update.effective_chat.id)
     
@@ -261,7 +303,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # --- Error Handler ---
 
-async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def error(update: object, context: ContextTypes.DEFAULT_TYPE):
     """Log Errors caused by Updates."""
     logger.warning(f'Update "{update}" caused error "{context.error}"')
 
