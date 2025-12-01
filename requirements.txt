@@ -1,9 +1,9 @@
 python-telegram-bot
-gspread
-google-auth
 python-dotenv
 openai
 groq
 google-generativeai
 httpx
 aiosqlite
+beautifulsoup4
+requests
