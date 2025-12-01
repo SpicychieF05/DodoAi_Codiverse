@@ -62,7 +62,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     welcome_msg = (
         f"Hello {user_name}! 👋\n"
-        f"I am Codiverse TechBot - Your Tech & Coding Assistant.\n\n"
+        f"I am Kyber (pronounced Kai-ber) - Your Tech & Coding Assistant.\n\n"
         f"I can help you with:\n"
         f"💻 Coding help & debugging\n"
         f"📰 Latest tech news & trends\n"
@@ -84,7 +84,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     
     help_text = (
-        "**🤖 Codiverse TechBot - Your Tech Companion**\n\n"
+        "**🤖 Kyber - Your Tech Companion**\n\n"
         "**📰 News Commands:**\n"
         "/news - Top tech news (Hacker News + RapidAPI)\n"
         "/news coding - Latest coding articles from DEV.to\n"
@@ -158,7 +158,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Construct System Prompt
     system_prompt = f"""
-    You are Codiverse TechBot, a tech and coding assistant.
+    You are Kyber (pronounced Kai-ber), a tech and coding assistant.
     
     **Your Persona:**
     {json.dumps(PERSONA, indent=2)}
@@ -173,6 +173,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     - If the answer is not in your knowledge base, provide best practices or suggest resources.
     - Keep responses concise and well-formatted for Telegram chat.
     - For news requests, redirect to /news command.
+    - Do NOT introduce yourself in every response. Only greet and introduce yourself when the user greets you (hello, hi, hey, etc.) or at the beginning of a conversation.
+    - For follow-up questions or technical queries, respond directly without self-introduction.
     """
     
     # Combine system prompt and user message
