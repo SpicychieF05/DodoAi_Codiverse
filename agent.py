@@ -97,28 +97,12 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "**🔥 Trending:**\n"
         "/trending - Hot topics in tech right now\n\n"
         "**Other Commands:**\n"
-        "/stats - Bot usage statistics\n"
         "/help - Show this help message\n\n"
         "Just type your question or select from the menu!"
     )
     await update.message.reply_text(help_text, parse_mode='Markdown')
 
-async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Admin stats command"""
-    if not update.message:
-        return
-    
-    try:
-        async with aiosqlite.connect('api_stats.db') as db:
-            async with db.execute("SELECT provider, COUNT(*) as calls, AVG(response_time) as avg_time, SUM(success) as successes FROM usage GROUP BY provider") as cursor:
-                rows = await cursor.fetchall()
-                stats_text = "📊 API Usage Stats:\n\n"
-                for provider, calls, avg_time, successes in rows:
-                    success_rate = (successes/calls)*100 if calls else 0
-                    stats_text += f"*{provider.title()}*: {calls} calls | {avg_time:.2f}s avg | {success_rate:.1f}% success\n"
-        await update.message.reply_text(stats_text, parse_mode='Markdown')
-    except Exception as e:
-        await update.message.reply_text(f"Error fetching stats: {e}")
+# Stats command removed - internal API metrics should not be exposed to users for privacy and security
 
 async def news_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Fetches latest tech news"""
@@ -232,7 +216,6 @@ if __name__ == "__main__":
     # Commands
     app.add_handler(CommandHandler("start", start_command))
     app.add_handler(CommandHandler("help", help_command))
-    app.add_handler(CommandHandler("stats", stats_command))
     app.add_handler(CommandHandler("news", news_command))
     app.add_handler(CommandHandler("trending", trending_command))
     app.add_handler(CommandHandler("github", github_command))
