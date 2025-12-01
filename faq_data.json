@@ -1,40 +1,116 @@
 {
   "general": [
     {
-      "q": "What makes Codiverse different?",
-      "a": "We operate on a Zero-Compromise 'Sharp Tech' philosophy. We engineer authoritative AI agents and precision-built digital systems rather than templates."
+      "q": "What can Codiverse TechBot help me with?",
+      "a": "I can help with coding questions, tech troubleshooting, latest tech news, GitHub trending projects, programming best practices, and development guidance across multiple languages (Python, JavaScript, Java, Go, Rust, C++, and more)."
     },
     {
-      "q": "Do you only make dark high-tech designs?",
-      "a": "No. We design for your brand identity. Sharp-Tech is our signature, but we work with any palette if it maintains clarity and structure."
-    }
-  ],
-  "ai_automation": [
-    {
-      "q": "What is Official Chatbot Training?",
-      "a": "We convert generalist AI into authoritative brand experts using RAG-based training on your institutional data, ensuring zero hallucinations."
+      "q": "How do I get tech news?",
+      "a": "Use /news for general tech news, /news coding for coding articles, /news python for Python-specific news, or /news [language] for any programming language. Use /trending or /github for trending repositories."
     },
     {
-      "q": "Can your AI handle complex tasks?",
-      "a": "Yes. It can integrate with your systems to handle bookings, inventory lookups, and automated workflows."
+      "q": "What programming languages do you support?",
+      "a": "I support all major languages including Python, JavaScript, TypeScript, Java, C++, C#, Go, Rust, PHP, Ruby, Swift, Kotlin, and more. Just ask your question!"
     }
   ],
-  "design": [
+  "coding_help": [
     {
-      "q": "Your designs are sharp and futuristic. What if my brand is traditional?",
-      "a": "Our design philosophy adapts to any brand identity, while maintaining premium structure and clarity."
+      "q": "Can you help debug my code?",
+      "a": "Absolutely! Share your code snippet and describe the error or unexpected behavior. I'll analyze it and provide solutions with explanations."
+    },
+    {
+      "q": "Can you review my code?",
+      "a": "Yes! I can review code for best practices, performance optimizations, security issues, and readability improvements. Share your code and I'll provide detailed feedback."
+    },
+    {
+      "q": "Can you help with algorithms and data structures?",
+      "a": "Definitely! I can explain concepts, help solve problems, analyze time/space complexity, and provide optimized solutions."
+    },
+    {
+      "q": "Do you provide code examples?",
+      "a": "Yes! I provide well-commented code examples with explanations to help you understand the implementation."
     }
   ],
-  "management": [
+  "tech_news": [
     {
-      "q": "Can you finish a project in 2 weeks?",
-      "a": "We can deliver an MVP-first rapid launch while avoiding quality trade-offs or technical debt."
+      "q": "Where does the news come from?",
+      "a": "I fetch news from reliable sources: Hacker News for top tech stories, DEV.to for coding articles, and GitHub for trending repositories."
+    },
+    {
+      "q": "How often is news updated?",
+      "a": "News is fetched in real-time when you request it, so you always get the latest information."
+    },
+    {
+      "q": "Can I get news for specific topics?",
+      "a": "Yes! Use /news [topic] where topic can be: coding, python, javascript, java, go, rust, ai, web, mobile, etc."
     }
   ],
-  "post_launch": [
+  "frameworks": [
     {
-      "q": "What if something breaks after launch?",
-      "a": "We offer ongoing support under our 'Pour the Wine' program—continuous monitoring, stability patches, and AI retraining."
+      "q": "Can you help with React/Vue/Angular?",
+      "a": "Yes! I can assist with all major frontend frameworks including React, Vue, Angular, Svelte, and Next.js."
+    },
+    {
+      "q": "What about backend frameworks?",
+      "a": "I support Node.js (Express, NestJS), Python (Django, Flask, FastAPI), Java (Spring Boot), Go (Gin, Echo), and more."
+    },
+    {
+      "q": "Can you help with mobile development?",
+      "a": "Absolutely! I can assist with React Native, Flutter, Swift (iOS), and Kotlin (Android)."
+    }
+  ],
+  "devops": [
+    {
+      "q": "Can you help with Docker?",
+      "a": "Yes! I can help with Dockerfile creation, Docker Compose, containerization strategies, and best practices."
+    },
+    {
+      "q": "What about CI/CD?",
+      "a": "I can assist with GitHub Actions, GitLab CI, Jenkins, CircleCI, and deployment strategies."
+    },
+    {
+      "q": "Can you help with cloud platforms?",
+      "a": "Yes! I have knowledge of AWS, Google Cloud, Azure, Railway, Vercel, Netlify, and other cloud platforms."
+    }
+  ],
+  "databases": [
+    {
+      "q": "Which databases do you support?",
+      "a": "SQL databases (PostgreSQL, MySQL, SQLite), NoSQL (MongoDB, Redis, Firebase), and cloud databases (Supabase, PlanetScale, etc.)."
+    },
+    {
+      "q": "Can you help with database design?",
+      "a": "Yes! I can assist with schema design, query optimization, indexing strategies, and choosing the right database for your use case."
+    }
+  ],
+  "best_practices": [
+    {
+      "q": "Can you recommend best practices?",
+      "a": "Absolutely! I provide guidance on clean code, SOLID principles, design patterns, testing strategies, security practices, and performance optimization."
+    },
+    {
+      "q": "How do I improve my code quality?",
+      "a": "Focus on: readable naming, single responsibility, DRY principle, proper error handling, writing tests, code reviews, and using linters/formatters."
+    }
+  ],
+  "learning": [
+    {
+      "q": "I'm a beginner. Can you help me learn?",
+      "a": "Of course! I can explain concepts step-by-step, provide learning paths, recommend resources, and answer questions as you learn."
+    },
+    {
+      "q": "How should I start learning programming?",
+      "a": "Start with Python or JavaScript. Learn fundamentals (variables, loops, functions), build small projects, practice on platforms like LeetCode/HackerRank, and read others' code."
+    }
+  ],
+  "troubleshooting": [
+    {
+      "q": "My code isn't working. What should I do?",
+      "a": "Share: 1) Your code, 2) Error message (if any), 3) What you expected to happen, 4) What actually happened. I'll help diagnose and fix it!"
+    },
+    {
+      "q": "How do I fix dependency errors?",
+      "a": "Try: 1) Clear cache, 2) Delete node_modules/venv and reinstall, 3) Check version compatibility, 4) Use lock files. Share specific error for targeted help."
     }
   ]
 }
