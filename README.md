@@ -145,6 +145,11 @@ Dodo_Codiverse_Teligram_Chatbot/
 
 ---
 
+## 🚀 Deployment guide on Render.com
+[See this Guide.md](https://github.com/SpicychieF05/KyberAi_Codiverse/blob/main/DEPLOY_ON_RENDER.md)
+
+---
+
 ## 🛠️ Troubleshooting
 
 - **Conflict Error**: If you see `Conflict: terminated by other getUpdates request`, it means another instance of the bot is running. Stop all python processes and restart.
