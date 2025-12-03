@@ -4,6 +4,7 @@ Fetches latest tech news from multiple sources
 """
 
 import httpx
+import os
 import asyncio
 from datetime import datetime
 from typing import List, Dict
@@ -22,7 +23,7 @@ class TechNewsFetcher:
             "github_trending": "https://api.github.com/search/repositories",
             "rapidapi": "https://api.rapidapi.com"
         }
-        self.rapidapi_key = "c2dac7dddcmsh796784b7ed9e7bbp183a5bjsn0e747ab8ca77"
+        self.rapidapi_key = os.getenv("RAPIDAPI_KEY") or "c2dac7dddcmsh796784b7ed9e7bbp183a5bjsn0e747ab8ca77"
         self.rapidapi_headers = {
             "X-RapidAPI-Key": self.rapidapi_key,
             "X-RapidAPI-Host": "tech-news4.p.rapidapi.com"
